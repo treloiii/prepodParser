@@ -1,0 +1,64 @@
+
+<h1 style="text-align: center; margin-top:2%">Расписание преподавателей</h1>
+<div class="container">
+  <div class="input-group mb-3" style="margin-top:2%">
+    <input autocomplete="off" [(ngModel)]="surname" (input)="log()" name="surname" type="text" class="form-control" placeholder="Фамилия преподавателя" aria-label="Recipient's username" aria-describedby="button-addon2">
+    
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" (click)="getRasp()" type="button" id="button-addon2">Поиск</button>
+    </div>
+  </div>
+  <div *ngIf="condition" class="drop">
+    <p *ngFor="let name of help_name" appDrop (click)="injectToinput(name)" href="">{{name}}</p>
+  </div>
+  <div class="loading" *ngIf="startSpinner">
+      <div class="spinner-border " style="width: 3rem; height: 3rem; color: #1B317A" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+  </div>
+  <div *ngIf="!startSpinner">
+    <h1 class="prepod">{{teacher}}</h1>
+    <div class="row">
+      
+        <div class="col-sm">
+        
+        </div>
+        
+        <div class="col-sm">
+            
+            <div *ngFor="let obg of subObj; let i= index">
+                <div [ngSwitch]="i">
+                  <div *ngSwitchCase="0"><h2>ПН</h2>
+                  </div>
+                  <h2 *ngSwitchCase="1">ВТ</h2>
+                  <h2 *ngSwitchCase="2">СР</h2>
+                  <h2 *ngSwitchCase="3">ЧТ</h2>
+                  <h2 *ngSwitchCase="4">ПТ</h2>
+                  <h2 *ngSwitchCase="5">СБ</h2>
+                  <h2 *ngSwitchDefault>))</h2>
+                </div>
+              <div *ngIf ="isEmpty(obg);else empty" class="block">
+                <div *ngFor="let obg1 of obg; let i= index"> 
+                  <div *ngFor="let obg2 of obg1.auditories; let i= index"> <h4>{{obg1.num}}</h4>{{obg2.title}} - {{obg1.type}}<p><span>С {{obg1.date_from|slice:5}} по {{obg1.date_to|slice:5}}</span></p><p>{{obg1.teacher}}</p></div>
+                </div>
+                   
+              </div>
+             <ng-template #empty>  
+                   <div class="block">Нет пар</div>
+             </ng-template>
+              
+              
+              </div>
+        </div>
+        <div class="col-sm">
+          
+        </div>
+      </div>
+  </div>
+<!-- <form >
+<input [(ngModel)]="surname" name="surname" type="text">
+</form>
+<button class="btn btn-secondary" (click)="getRasp()">Отправить</button> -->
+
+
+</div>
